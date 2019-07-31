@@ -1,0 +1,117 @@
+﻿nerdquiz v2.34 - 22.01.2017
+nerdquiz v2.33 - 19.12.2016
+nerdquiz v2.32 - 09.12.2016
+nerdquiz v2.30 - 29.09.2016
+nerdquiz v2 - 20.05.2016
+nerdquiz v1 - 20.04.2016
+
+
+
+
+
+nerdquiz v3:
+alles: 							status des spiels speichern (spieler, spielerpunkte, punkte auf board, beantwortete fragen)
+alles: 							responsive design
+admin: 							youtube videos in adminbereich nicht klickbar
+admin/brett: 					audio/video trivia als youtube oder mp3?
+generator: 						style
+alles: 							code optimieren, code kommentieren
+admin: 							youtube videos werden doppelt geladen hotfix verbessern (fragen werden doppelt geladen bei einem klick)
+mobile website: 				verbinden ohne website neu aufzurufen
+admin/brett/mobile: 			smartbuzzer melden sich beim server an
+admin/brett/mobile:				schätzfragen: spieler auf smartphone die antworten geben lassen, die dann ans adminpanel und dort button zum zeigen auf tv
+
+
+
+
+
+erledigt:
+node:							webseite öffnet sich automatisch wenn interface gewählt wurde
+smartbuzzer: 					anmeldeablauf geändert
+smartbuzzer: 					statt manuell ID eingeben, die spieler aus dropdown wählen welche noch nicht vergeben wurden, ip und port sind nicht nötig
+smartbuzzer: 					automatisch die buzzerwebsite anzeigen wenn website auf mobilgerät angezeigt wird
+admin: 							hinweis bei image-frage dass bild in frage eingetragen werden muss
+buzzer: 						playstation2 buuzer von FallenMycraft hinzugefügt
+admin: 							mit minus button können die buttons selbst gelöscht werden
+admin: 							anordnung+design und klappbare kategorien
+node: 							Welche Netzwerkverbindung soll verwendet werden? auswahl -> ip in ip.js schreiben
+fragengenerator: 				imagefrage, trivia automatisch das selbe bild wählen
+bilder raten: 					anhand questiontype neue div über pietimer einblenden.
+								buzzern muss wärenddessen möglich sein.
+								wenn gebuzzert dann bildzoom anhalten/notfalls bild ausblenden
+								bei trivia oder fragenreset muss auch dieses neue div ausgeblendet werden
+generator: 						copy/paste besser lösen / durch herunterladen ersetzen
+generator: 						dynamische kategorien werden nicht geladen
+keyboardbuzzer: 				buzzerids frei wählbar
+admin: 							spielbrett nicht abschneiden
+admin: 							seite verlassen meldung
+admin:							kategorien dynamisch
+admin: 							drag drop bei neu hinzugefügten spielern klappt nicht
+admin: 							spieler dynamisch
+admin: 							fragen auch im adminbereich transparent wenn gewählt
+admin: 							youtube videos werden doppelt geladen (HOTFIX)
+generator: 						wenn kategorie "leer", dann diese nicht im formular anzeigen
+generator: 						zwischenablage funktioniert nicht
+pi:								kabel löten
+pi: 							timestamps raus/nullen
+brett: 							youtube videos spielen weiter, wenn trivia gezeigt und frühzeitig neue runde begonnen wurde
+admin: 							wenn frage gestartet wurde, spielfeld tabelle nicht klickbar machen für neue frage, so wird verhindert dass neue runde startet ohne das alte trivia weg ist
+admin: 							bei tausender punkten fehlt letzte stelle
+func/web: 						tastaturbuzzer marcel
+smartbuzzer: 					style
+pi/func: 						timestamps überall raus (app, appweb, pi)
+admin: 							bei drag stimmt cursorposition nicht mit zahl überein
+brett: 							pietimer anhalten wenn show trivia
+brett/admin: 					nach drag der punkte currentp doppelt (jquery:ui clone-helper weg)
+smartbuzzer: 					buzzern multitouch
+android: 						app fertig machen, buzzerid in javascript auslesen
+pi/func: 						timestamps auf server berechnen
+brett: 							website zum buzzern
+generator: 						scollbalken deaktivieren, text nicht wrappen
+generator: 						<html> im textfeld behalten
+brett: 							pietimerhöhe bei fragen mit mehreren zeilen
+brett: 							willkommensnachricht
+fragen: 						generator für fragen bauen (jquery +/- für anzahl der fragen, dropdown mit kategorien und punkten, als textdatei speichern und vorherige datei backupen)
+admin: 							frage starten nur zeigen wenn frage gewählt
+brett: 							bei aktiver frage den inhalt über pietimer anzeigen
+brett:							wenn punkte hinzugefügt werden, wird borderfakediv nicht mit verschoben
+alle: 							materialize löschen
+brett:							design (timestamps in die mitte und dann rüberutschen)
+admin: 							design
+node:							ip-adressen anzeigen und verbindungen erleichtern
+pi:								buzzer5+6 als tastatur o.ä.
+brett:			 				bei verdoppeln der 100er punkte wird das borderfakediv entfernt
+brett: 							trivia linebreaks
+brett: 							countdown design
+brett: 							umlaute und sonderzeichen bei triviatext
+brett:							counterdesign
+brett: 							trivia von floatingbuzzer trennen
+admin: 							bei frage löschen neue runde starten
+brett: 							buzzern nur erlauben solange countdown läuft
+brett:							zierbalken wie ladebalken material design beim kategorien unten
+audio:							zonkaudio leiser
+brett:							kategoriename und punkte der frage über countdown anzeigen
+brett/admin: 					zeit wann yt video starten und enden soll
+brett/admin:					countdown einbauen
+brett/admin: 					bei update der punkte werden deaktivierte fragen resettet
+admin: 							mülleimer wenn keiner die frage beantwortet
+admin: 							bei keiner trivia button ausblenden
+admin: 							nach verdoppeln, punkte nicht mehr draggable
+admin: 							wenn draggable punkte verdoppelt wurden, wird die frage in fragen.txt nicht mehr gefunden. identifier 0100 umbauen (name?)
+admin: 							wenn draggable punkte verdoppelt wurden, kann nicht mehr weiter verdoppelt werden. identifier 0100 umbauen oder punkte einzeln updaten
+admin:							punkte verdoppeln/halbieren
+brett: 							timestamps neu berechnen (minuten in millis:differenz) - bullshit! -> timestamps auf server berechnen
+brett: 							scores design
+brett/admin: 					wenn videos oder bilder gezeigt werden sollen, direkt auf dem board anzeigen
+brett:							firstbuzzer merken und zeitdifferenz zu allen anderen buzzern, gucken ob eigener buzzer schon drin ist, wenn nicht, dann adden. wenn runde resettet, array leeren
+brett:							fragen deaktivieren wenn gewählt
+admin: 							punkte +/- ggf. mit tabelle im adminpanel
+admin: 							reset vom spielfeld, dann erst name ausblenden um fragen wieder zu sehen
+brett: 							sound beim buzzern an tv
+brett: 							new_round wird nicht beachtet, man kann öfter buzzern
+brett: 							scores auf board anzeigen
+admin: 							bei neuer runde fragen/antworten resetten
+desk.js: 						dateien aus allen ordnern in desk.js eintragen
+brett: 							buzzer bei bildern/videos/texte größe entsprechend anpassen
+brett: 							bilder bei buzzern random
+brett:							wenn weniger spieler 0 weg

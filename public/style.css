@@ -1,0 +1,317 @@
+@font-face {
+				font-family: 'Roboto-Regular';
+				src: url('./fonts/Roboto-Regular.ttf');
+}
+@font-face {
+				font-family: 'Roboto-Medium';
+				src: url('./fonts/Roboto-Medium.ttf');
+}
+@font-face {
+				font-family: 'Roboto-Bold';
+				src: url('./fonts/Roboto-Bold.ttf');
+}
+
+			html, body {
+				width: 1920px;
+				height: 1080px;
+				margin: 0;
+				padding: 0;
+				position: relative;
+				font-family: Roboto-Regular;
+				color: white;
+				overflow: hidden;
+			}
+			table {
+				border:0;
+				border-collapse: collapse;
+				border-style: solid;
+			}
+			a, a:hover, a:visited {
+				color: #114466;
+				text-decoration: none;
+			}
+			#gamewrapper {
+				padding: 0;
+				margin: 0;
+				border: 0;
+				width: 1920px;
+				height: 980px;
+				border: 0;
+			}
+			#spielfeld {
+				float: left;
+				width: 1920px;
+				height: 980px;
+				background-color: rgba(0, 0, 0, 0);
+				-background: url('/images/nerdbeef.png') no-repeat center;
+				font-size: 60px;
+				font-weight: bold;
+				vertical-align: center;
+				text-align: center;
+			}
+			#header{
+				background-color: #607D8B;
+				width: 16%;
+				height: 150px;		
+				font-size: 50px;
+				text-align: center;
+				border: 0;
+				text-shadow: 5px 5px 3px rgba(41, 41, 41, 0.85);
+				-webkit-font-smoothing: antialiased;
+			}
+			td.pointsrow {
+				border: 0;
+				border: 2px solid white;
+			}
+			#scoresdiv {
+				background-color: #607D8B;
+				width: 1917px;
+				overflow: hidden;
+				margin-left: 1px;
+				margin-right: 2px;
+				padding-top: 10px;
+				height: 100px;
+				text-align: center;
+				position: relative;
+			}
+			#playerwrapper {
+				float: left;
+				padding-left: 50px;
+				padding-right: 50px;
+			}
+			#playername {
+				font-size: 40px;
+				text-shadow: 5px 5px 3px rgba(41, 41, 41, 0.85);
+				-webkit-font-smoothing: antialiased;				
+			}
+			#playerscores {
+				font-size: 30px;
+				text-shadow: 5px 5px 3px rgba(41, 41, 41, 0.85);
+				-webkit-font-smoothing: antialiased;
+			}
+			#stand {
+				position: absolute;
+				right: 10px;
+				bottom: 10px;
+				font-size: 20px;
+				text-shadow: 5px 5px 3px rgba(41, 41, 41, 0.85);
+				-webkit-font-smoothing: antialiased;
+			}
+			#floatingwelcome {
+				border: 1px solid #607D8B;
+				width: 620px;
+				height: 300px;
+				margin: 0;
+				padding: 0;
+				padding-top: 100px;
+				z-index: 100;
+				position: absolute;
+				left: 650px;
+				top: 280px;
+				background-color: white;
+				text-align: center;
+				display: inline-block;
+				color: #607D8B;
+				box-shadow: 10px 10px 25px rgba(20, 20, 20, 0.75);
+				font-size: 50px;
+			}
+			#floatingwelcomeadmin {
+				padding-top: 85px;
+				font-size: 16px;
+				text-align: center;
+			}
+			#floatingbuzzer {
+				border: 1px solid #607D8B;
+				width: 720px;
+				height: 480px;
+				margin: 0;
+				padding: 0;
+				z-index: 10;
+				position: absolute;
+				left: 600px;
+				top: 275px;
+				background-color: white;
+				text-align: center;
+				display: inline-block;
+				color: #607D8B;
+				box-shadow: 10px 10px 25px rgba(20, 20, 20, 0.75);
+			}
+			#buzzertitle {
+				position: relative;
+				top: 0px;
+				height: 50px;
+				width: 100%;
+				background-color: #607D8B;
+				text-align: left;
+				text-align: center;
+			}
+			#buzzertitlecontent {
+				display: inline-block;
+				position: relative;
+				top: 8px;
+				color: white;
+				font-size: 26px;
+				height: 30px;
+				-webkit-font-smoothing: antialiased;
+			}			
+			#buzzer {
+				border: 0;
+				width: 710px; 
+				height: 200px;
+				font-size: 175px;
+				font-weight: bold;
+				background: white;
+				margin: auto;  
+				position: relative;
+				top: 50px;
+				display: inline-block;
+				text-align: center;
+				-webkit-font-smoothing: antialiased;
+			}
+			#floatingtrivia {
+				border: 1px solid #607D8B;
+				width: 1230px;
+				height: 680px;
+				margin: 0;
+				padding: 0;
+				z-index: 10;
+				position: absolute;
+				left: 340px;
+				top: 190px;
+				background-color: white;
+				text-align: center;
+				display: inline-block;
+				color: #607D8B;
+				-webkit-font-smoothing: antialiased;
+				box-shadow: 10px 10px 25px rgba(20, 20, 20, 0.75);
+			}
+			#triviatitle {
+				position: relative;
+				top: 0px;
+				height: 50px;
+				width: 100%;
+				background-color: #607D8B;
+				text-align: left;
+				text-align: center;
+			}
+			#triviatitlecontent {
+				display: inline-block;
+				position: relative;
+				top: 8px;
+				color: white;
+				font-size: 26px;
+				height: 30px;
+				-webkit-font-smoothing: antialiased;
+			}
+			#trivia {
+				border: 0;
+				width: 100%;
+				height: 600px;
+				font-size: 175px;
+				font-weight: bold;
+				background: white;
+				margin: auto;  
+				position: relative;
+				top: 50px;
+				display: inline-block;
+				text-align: center;
+				-webkit-font-smoothing: antialiased;
+			}
+			#timestamp {
+				border: 0;
+				position: relative;
+				bottom: -70px;
+				display: table;
+				text-align: center;
+				margin: 0 auto;
+			}
+			#timestampentry {
+				font-size: 32px;
+				float: left;
+				padding-left: 15px;
+				-webkit-font-smoothing: antialiased;
+			}
+			#floatingpietimer {
+				border: 1px solid #607D8B;
+				width: 450px;
+				height: 110px;
+				margin: 0;
+				padding: 0;
+				z-index: 5;
+				position: absolute;
+				left: 730px;
+				top: 290px;
+				background-color: white;
+				text-align: center;
+				display: inline-block;
+				color: #607D8B;
+				-webkit-font-smoothing: antialiased;
+				box-shadow: 10px 10px 25px rgba(20, 20, 20, 0.75);
+			}
+			#pietimertitle {
+				position: relative;
+				top: 0px;
+				height: 50px;
+				width: 100%;
+				background-color: #607D8B;
+				text-align: center;
+			}
+			#pietimertitlecontent {
+				display: inline-block;
+				position: relative;
+				top: 8px;
+				color: white;
+				font-size: 26px;
+				height: 30px;
+				-webkit-font-smoothing: antialiased;
+			}
+			#pietimermain {
+				border: 0;
+				margin: 0;
+				padding: 0;
+				position: absolute;
+				text-align: center;
+				vertical-align: center;
+				display: inline-block;
+				width: 380px;
+				height: 380px;
+			}
+			#pietimerfrage {
+				margin: 15px;
+				font-size: 22px;
+				font-weight: bold;
+			}
+			#imagequestion {
+				border: 1px solid #607D8B;
+				width: 600px;
+				height: 500px;
+				margin: 0;
+				padding: 0;
+				z-index: 8;
+				position: absolute;
+				left: 650px;
+				top: 260px;
+				background-color: white;
+				text-align: center;
+				display: inline-block;
+				color: #607D8B;
+				box-shadow: 10px 10px 25px rgba(20, 20, 20, 0.75);
+				overflow: hidden;
+			}
+			#imagequestionimage {
+				position:relative;
+				top:0px;
+				left:0px;
+			}
+			.pie_timer {
+				position: relative;
+				left: -190px;
+				top: 10px;
+			}
+			.borderfake {
+				position: absolute;
+				height: 6px;
+				width: 100%;
+				margin-left: -1px;
+				border: 0;
+			}

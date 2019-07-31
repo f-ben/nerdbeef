@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>NerdBeef! Adminbereich</title>
+		<link rel="stylesheet" type="text/css" href="styleadmin.css" media="screen" />
+		<script type="text/javascript" src="ip.js"></script>
+		<script type="text/javascript" src="jquery.min.js"></script>
+		<script type="text/javascript" src="jquery-ui.js"></script>
+		<script type="text/javascript" src="socket.io.js"></script>
+		<script type="text/javascript" src="func.js"></script>
+		<script type="text/javascript">
+		
+		function preventUnload( state )
+		{
+			unloadMessage = "Sind Sie sicher dass Sie die Seite verlassen möchten?";
+			window.onbeforeunload = state ? function() { return unloadMessage; } : null;
+		}
+		preventUnload( true );
+  
+		$(function() {
+			var socket = io.connect(ip);
+			$('#adminpointsheader td').text('');
+			$('#fixquestionrow').hide();
+			clean_admin_question();
+
+			$('#players').submit(function(e) {
+				var player = [];
+				var points = [];
+				player.splice(0,player.length);
+				points.splice(0,points.length);
+				e.preventDefault();
+				
+				var spieleranzahl = (($('#playerswrapper .textinput').length)/2);
+				for(i=1;i<=spieleranzahl;i++)
+				{
+					player.push($('input[name=player'+i+']').val());
+					points.push($('input[name=points'+i+']').val());
+				}
+				var data = {
+					player: player,
+					points: points,
+				};
+				socket.emit('playersync', data);
+				clean_admin_question();
+			});
+
+			$('#categories').submit(function(e) {
+				var categories = [];
+				categories.splice(0,categories.length);
+				e.preventDefault();
+				var categoriesanzahl = ($('#categorieswrapper .textinput').length-1)
+				for(i=1;i<=categoriesanzahl;i++)
+				{
+					categories.push($('input[name=category'+i+']').val());
+				}
+				
+				var data = {
+					categories: categories,
+					points: $('input[name=points]').val(),
+				};
+				$('#adminpointsheader td').text('Punkte');
+				socket.emit('gamesync', data);
+			});
+			
+			$('#triviabutton').click(function(){
+				socket.emit('showtrivia',triviadata);
+			});
+
+			$('#startquestionbutton').click(function(){
+				var data = {
+					currentc: currentc,
+					currentp: currentp,
+					currentq: currentq,
+					questiontype: questiontype
+				};
+				socket.emit('startquestion',data);
+				$('.pointsrow').off();
+			});
+			
+			$('#clean').click(function(){
+				clean_admin_question();
+			});
+			
+			$('.demobuzzer').click(function() {
+				var demobuzzerid = $(this).attr("id")-1;
+				var data = {
+					buzzerid: demobuzzerid,
+					timestamp: '0',
+				};
+				socket.emit('demobuzzer',data);
+			});
+			
+			$('#addplayer').click(function() {
+				var spieleranzahl = ($('#playerswrapper .textinput').length)/2;
+				var spieler = spieleranzahl+1;				
+				$('#playerswrapper').append('<tr><td>'+spieler+'<input type="text" name="player'+spieler+'" value="Spieler'+spieler+'" class="textinput" /></td><td><input type="text" name="points'+spieler+'" class="textinput" id="points" value="0" /></td><td><div class="drop" id="plus">+</div><div class="drop" id="minus">-</div></td></tr>')
+		//		$( "#players" ).trigger("submit");
+			});
+			
+			$('#removeplayer').click(function() {	
+				if ($("#playerswrapper tr").length > 2) {			
+					$('#playerswrapper tr:last').remove();
+				}
+		//		$("#playerswrapper").find("tr:gt(0)").remove();
+		//		$( "#players" ).trigger("submit");
+			});
+			
+			$('#addcategory').click(function() {
+				var kategorienanzahl = ($('#categorieswrapper .textinput').length);
+				$('#categorieswrapper tr:last').before('<tr><td><input type="text" name="category'+kategorienanzahl+'" value="Kategorie'+kategorienanzahl+'" class="textinput" style="width:350px" /></td></tr>');
+		//		$( "#categories" ).trigger("submit");
+			});
+			
+			$('#removecategory').click(function() {		
+				if ($("#categorieswrapper tr").length > 3) {			
+					$('#categorieswrapper tr:last').prev().remove();
+				}
+		//		$('#categorieswrapper tr:last').prev().remove();
+		//		$( "#categories" ).trigger("submit");
+			});
+			
+			$('#catcollapse').click(function(){
+					if($('#categorieswrapper').find('tr:gt(1)').is(':visible'))
+					{
+						$('#categorieswrapper').find('tr:gt(0)').hide();
+						$('#catcollapse').attr('src','/images/downarrow.png');
+					}
+					else
+					{
+						$('#categorieswrapper').find('tr:gt(0)').show();
+						$('#catcollapse').attr('src','/images/uparrow.png');
+					}
+			});
+			
+			socket.on('points_recalc', function(data) {
+				points_recalc(data);
+			});
+			
+			socket.on('sync_players', function(data) {
+				$('.pointsrow').click(function(){
+					var id = $(this).attr("id");
+					var temp = read_question(id);
+				});
+				refresh_drag_drop();
+			});
+			
+			socket.on('disable_question', function(data) {
+				disable_question(data);
+			});
+			
+			socket.on('fix_question', function(data) {
+				fix_question(data);
+			});
+
+			socket.on('sync_game', function(data) {
+				sync_game(data);
+				refresh_drag_drop();
+				$('#fixquestionrow').show();
+
+				$('#fix').droppable({
+					accept: '.drag',
+					activeClass: 'highlight',
+					drop: function(event, ui) {
+						draggableid = $(ui.draggable).parent(".pointsrow").attr("id");
+						socket.emit('fixquestion',draggableid);
+						$( "#players" ).trigger("submit");
+					}
+				});
+				
+				$('#del').droppable({
+					accept: '.drag',
+					activeClass: 'highlight',
+					drop: function(event, ui) {
+						draggableid = $(ui.draggable).parent(".pointsrow").attr("id");
+						socket.emit('disablequestion',draggableid);
+						$( "#players" ).trigger("submit");
+					}
+				});
+
+				$('.pointsrow').click(function(){
+					var id = $(this).attr("id");
+					var temp = read_question(id);
+				});
+				
+				$('.mult').click(function(){
+					var data = {
+						op: "mult",
+						val: $(this).attr('id'),
+					};
+					socket.emit('pointsrecalc',data);
+				});
+				
+				$('.div').click(function(){
+					var data = {
+						op: "div",
+						val: $(this).attr('id'),
+					};
+					socket.emit('pointsrecalc',data);
+				});	
+			});	
+		});
+		</script>
+	</head>
+<body>
+<table border="0" id="adminwrapper">
+	<tr>
+		<td valign="top">
+			<form id="players" action="#">
+					<table id="playerswrapper">
+						<tr><td colspan=3>Spieler <div id="addplayer">+</div> <div id="removeplayer">-</div><input type="hidden" name="new_round" id="new_round" value="1"><input type="submit" class="button" value="OK" /></td></tr>
+						<tr><td>1<input type="text" name="player1" value="Ben" class="textinput" /></td><td><input type="text" name="points1" class="textinput" id="points" value="0" /></td><td><div class="drop" id="plus">+</div><div class="drop" id="minus">-</div></td></tr>
+						<tr><td>2<input type="text" name="player2" value="Dennis" class="textinput" /></td><td><input type="text" name="points2" class="textinput" id="points" value="0" /></td><td><div class="drop" id="plus">+</div><div class="drop" id="minus">-</div></td></tr>
+						<tr><td>3<input type="text" name="player3" value="Micha" class="textinput" /></td><td><input type="text" name="points3" class="textinput" id="points" value="0" /></td><td><div class="drop" id="plus">+</div><div class="drop" id="minus">-</div></td></tr>
+					</table>
+		<!--		<input type="hidden" name="new_round" id="new_round" value="1"><input type="submit" class="button" value="Absenden" /> -->
+			</form>
+		</td>
+		<td valign="top">
+			<form id="categories" action="#">
+				<table id="categorieswrapper" border="0">
+					<tr><td><img id="catcollapse" src="/images/uparrow.png" style="border:0; margin-bottom:-7px;"/>Kategorien <div id="addcategory">+</div> <div id="removecategory">-</div><input type="submit" class="button" value="OK" /></td></tr>
+					<tr><td><input type="text" name="category1" value="Firmen" class="textinput" style="width:350px" /></td></tr>
+					<tr><td><input type="text" name="category2" value="80er/90er" class="textinput" style="width:350px" /></td></tr>
+					<tr><td><input type="text" name="category3" value="Zeichentrick" class="textinput" style="width:350px" /></td></tr>
+					<tr><td><input type="text" name="category4" value="Videospiele" class="textinput" style="width:350px" /></td></tr>
+					<tr><td><input type="text" name="category5" value="Technik" class="textinput" style="width:350px" /></td></tr>
+					<tr><td><input type="text" name="points" value="100,200,500,800,1000" class="textinput" style="width:350px" /></td></tr>
+				</table>
+		<!-- 		<input type="submit" class="button" value="Absenden" /> -->
+			</form>
+		</td>
+	</tr>
+	</table>
+	<table>
+	<tr>
+		<td valign="top">
+			<table id="spielfeldwrapper">
+				<tr>
+					<td valign="top">
+						<div id="spielfelddiv">
+							<table id="spielfeld">
+								<tr id="spielfeldheader"></tr>
+							</table>
+						</div>
+					</td>
+					<td valign="top">
+						<table id="adminpoints" border="0">
+							<tr id="adminpointsheader"><td id="header">Punkte</td></tr>
+						</table>
+					</td>
+				</tr>
+				<tr id="fixquestionrow">
+					<td colspan="2">
+					&nbsp;
+					<center>
+						<div class="fixbuttons" id="fix">Frage reparieren</div>
+						<div class="fixbuttons" id="del">Frage l&ouml;schen</div>
+						<div class="fixbuttons" id="clean">Vorschau entfernen</div>
+					</center>
+					</td>
+				</tr>
+			</table>
+			<center>
+
+			</center>
+		</td>
+		<td valign="top">
+			<table id="questionwrapper">
+				<tr><td><div id="current">Kategorie</div></td></tr>
+				<tr><td><div id="frage">Frage</div></td></tr>
+				<tr><td><div id="startquestionbutton" style="color:red;padding-top:10px;padding-bottom:30px;">Frage starten</div></td></tr>
+				<tr><td><div id="media">Media</div></td></tr>
+				<tr><td><div id="multiple">Multiple</div></td></tr>
+				<tr><td><div id="antwort" style="color:green;padding-top:10px">Antwort</div></td></tr>
+				<tr><td><div id="triviabutton"></div></td></tr>
+				<tr><td><div style='height:100px;'>&nbsp;</div></td></tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

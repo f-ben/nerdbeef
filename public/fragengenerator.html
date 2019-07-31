@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>NerdBeef! Fragengenerator</title>
+		<link rel="stylesheet" type="text/css" href="stylefragen.css" media="screen" />
+		<script type="text/javascript" src="ip.js"></script>
+		<script type="text/javascript" src="jquery.min.js"></script>
+		<script type="text/javascript" src="socket.io.js"></script>
+		<script type="text/javascript" src="func.js"></script>
+		<script type="text/javascript">
+
+		function preventUnload( state )
+		{
+			unloadMessage = "Sind Sie sicher dass Sie die Seite verlassen möchten?";
+			window.onbeforeunload = state ? function() { return unloadMessage; } : null;
+		}
+		preventUnload( true );
+		
+		$(function() {
+			$('#downloaddiv').hide();
+			$('#fragendiv').hide();
+			$('#textbox').val('Bitte aktualisieren Sie die Kategorien im Adminpanel, damit das Template für die Fragen erstellt wird.');
+			var socket = io.connect(ip);
+			var kategorien = [];
+			var anzahl_kategorien = 0;
+			var punkte = [];
+			var anzahl_punkte = 0;
+
+			var link = document.getElementById('downloadlink');
+			var create = document.getElementById('fragendiv');
+			var textbox = document.getElementById('textbox');
+			var textFile = null;
+			var makeTextFile = function (text) {
+				var data = new Blob([text], {type: 'text/plain'});
+				if (textFile !== null) {
+					window.URL.revokeObjectURL(textFile);
+				}
+				textFile = window.URL.createObjectURL(data);
+				return textFile;
+			};
+
+			socket.on('sync_game', function(data) {
+				$('#tabellediv').empty();
+				$('#fragendiv').show();
+				$('#textbox').val('');
+				$('#textbox').hide();
+				
+				kategorien.splice(0,kategorien.length);
+				punkte.splice(0,punkte.length);
+				anzahl_kategorien = 0;
+				anzahl_punkte = 0;
+				for(i=0;i<=data.categories.length;i++)
+				{
+					if(data.categories[i] != '' && data.categories[i] !== undefined)
+						kategorien.push(data.categories[i]);
+				}
+				anzahl_kategorien = kategorien.length;
+				punkte = data.points.split(',');
+				anzahl_punkte = punkte.length;
+
+				function formular_erstellen()
+				{
+				
+					for(i=0;i<anzahl_kategorien;i++)
+					{
+						$('#tabellediv').append('<table class=cattable id=cat'+i+' name='+i+'><tr class=header style=\'text-align:left;background-color:#cceeff\'><td colspan=9>'+kategorien[i]+'</table>');
+						$('#cat'+i).append('<tr class=header>\
+							<td class=header width=80>Punkte</td>\
+							<td class=header width=80>Art</td>\
+							<td class=header width=500>Frage (bei "image" hier den Namen der Bilddatei eintragen)</td>\
+							<td class=header width=175>YouTube ID#Start#Ende</td>\
+							<td class=header width=400>Multiple 1|2|3|4</td>\
+							<td class=header width=250>Richtige Antwort</td>\
+							<td class=header width=150>Triviaart</td>\
+							<td class=header width=250>Trivia[#start#ende]</td></tr>');
+					}
+
+					$('.cattable').each(function() {
+						for(p=0;p<anzahl_punkte;p++)
+						{
+							var punkteid = punkte[p];
+							$(this).append('<tr><td id=punkte name='+punkteid+' class=punkte>'+punkteid+'\
+							<td>\
+							<select id=frageart class=frageselect name='+punkteid+'>\
+								<option value=simple>simple</option>\
+								<option value=multiple>multiple</option>\
+								<option value=audio>audio</option>\
+								<option value=image>image</option>\
+							</select>\
+							</td>\
+								<td><input type=text id=frage name='+punkteid+'></td>\
+								<td><input type=text id=videoid name='+punkteid+'></td>\
+								<td><input type=text id=multi name='+punkteid+'></td>\
+								<td><input type=text id=richtig name='+punkteid+'></td>\
+								<td><select id=triviaart name='+punkteid+' class=triviaselect>\
+								<option value=ohne>ohne</option>\
+								<option value=text>text</option>\
+								<option value=image>image</option>\
+								<option value=video>video</option>\
+								<option value=audio>audio</option>\
+								<option value=imagequestionimage>imagequestionimage</option>\
+								</select></td>\
+								<td width=170><input type=text id=trivia name='+punkteid+' value=ohne></td></tr>');
+						}
+						$(this).append('<tr class=header><td colspan=9>&nbsp;</td></tr>');
+					});
+
+					$('.frageselect').change(function() {
+						var aktuelleid = $(this).attr('name');
+						var auswahl = $(this).val();
+
+						$(this).closest('tr').find('[name$='+aktuelleid+']').hide();
+						$(this).closest('tr').find('[name$='+aktuelleid+']').not('[id=frageart]').not('[id=triviaart]').val('');
+						$(this).closest('tr').find('[id=videoid]').hide();						
+						$(this).closest('tr').find('[id=richtig]').show();
+						$(this).closest('tr').find('[id=triviaart]').show();
+						$(this).closest('tr').find('[id=punkte]').show();
+						$(this).closest('tr').find('[id=frageart]').show();
+						$(this).closest('tr').find('[id=frage]').show();
+						$(this).closest('tr').find('[id=triviaart]').val('ohne');
+
+						if(auswahl == 'multiple')
+						{
+							$(this).closest('tr').find('[id=multi]').show();
+						}
+						else if(auswahl == 'audio')
+						{
+							$(this).closest('tr').find('[id=videoid]').show();
+						}
+						else if(auswahl == 'image')
+						{
+							$(this).closest('tr').find('[id=triviaart]').hide();
+							$(this).closest('tr').find('[id=triviaart]').val('imagequestionimage');
+						}
+
+						var triviaval = $(this).closest('tr').find('[id=triviaart]').val();
+						if ((triviaval == 'ohne')||(triviaval == 'imagequestionimage'))
+						{
+							$(this).closest('tr').find('[id=trivia]').hide();
+							$(this).closest('tr').find('[id=trivia]').val('ohne');
+						}
+						else
+						{
+							$(this).closest('tr').find('[id=trivia]').show();
+							$(this).closest('tr').find('[id=trivia]').val('ohne');
+						}
+					});
+
+					$('#fragendiv').click(function(e) {
+						e.preventDefault();
+						var temp = '';
+						var textbox = $('#textbox');
+						textbox.val('');
+
+						$('tr').not('.header').each(function () {
+							var str_array = []
+							str_array.splice(0,str_array.length);		
+							var str_catpunkte = str_array.push($(this).closest('table').attr('name')+$(this).find('[id=punkte]').attr('name'));
+							var str_frageart = str_array.push($(this).find('[id=frageart]').val());
+							var str_frage = str_array.push($(this).find('[id=frage]').val());
+							var str_videoid = str_array.push($(this).find('[id=videoid]').val());
+							var str_multi = str_array.push($(this).find('[id=multi]').val());
+							var str_richtig = str_array.push($(this).find('[id=richtig]').val());
+							var str_triviaart = str_array.push($(this).find('[id=triviaart]').val());
+							var str_trivia = str_array.push($(this).find('[id=trivia]').val());
+							
+							for(i=0;i<=str_array.length;i++)
+							{
+								if(str_array[i]!='' && str_array[i]!==undefined)
+								{					
+									textbox.val(textbox.val() + str_array[i]);
+									if(i<str_array.length-1)
+										textbox.val(textbox.val() + '|');
+								}
+							}
+							textbox.val(textbox.val() + '\n');
+						});
+						
+						$('#downloaddiv').show();
+						link.href = makeTextFile(textbox.val());
+					});
+
+					$('.triviaselect').change(function() {
+						var auswahl = $(this).val();
+						if((auswahl == 'ohne')||(auswahl == 'iamgequestionimage'))
+						{
+							$(this).closest('tr').find('[id=trivia]').hide();
+							$(this).closest('tr').find('[id=trivia]').val('ohne');
+						}
+						else
+						{
+							$(this).closest('tr').find('[id=trivia]').show();
+							$(this).closest('tr').find('[id=trivia]').val('');
+						}
+					});
+				}
+				formular_erstellen();
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<div id="tabellediv"></div>
+			<div id="fragendiv">Datei erstellen</div>
+			<div id="downloaddiv"><a download="fragen.txt" target="_blank" id="downloadlink">fragen.txt herunterladen</a><br>
+			Diese Datei bitte in dem selben Ordner abspeichern, in dem auch die Datei "nerdbeef2.js" liegt.</div>
+			<br>
+			<textarea id="textbox" rows="15" cols="200"></textarea>
+	</body>
+			

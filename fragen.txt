@@ -1,0 +1,20 @@
+Medien
+0100|image|ozzy.jpg|Ozzy Osbourne|imagequestionimage|ohne
+0200|multiple|Wie lautet das erste Album von Britney Spears?|Baby Baby|Baby always|Baby one more time|Baby never again|Baby one more time|ohne|ohne
+0500|audio|Lied raten: Errate die Filmreihe dessen Tittellied nun Rückwärts abgespielt wird.|u9l4FV4pSWs#5#25|Star-Wars|video|_D0ZQPqeJkk#5#25
+01000|simple|Schätzfrage: Die Firma Apple lies 1984 von Ridley Scott einen Werbefilm für den ersten Macintosh drehen, welcher beim 18. Super-Bowl gezeigt wurde. Wie hoch war Gerüchten zu Folge das Budget für den Ein-Minütigen Werbeclip?|ca. 900.000 US Dollar (heute ca 2.1 Mio)|video|vNy-7jv0XSc#30#59
+Firmen
+1100|simple|Schätzfrage: Wie viele Mitarbeiter arbeiten bei Google weltweit?|60,000|image|google.jpg
+1200|simple|Unter welchem Namen ist Googles "Geheimlabor" bekannt?|GoogleX|ohne|ohne
+1500|multiple|Wann wurde Microsoft gegründet?|1965|1970|1975|1980|1975|text|4. April 1975, Albuquerque, New Mexico, Vereinigte Staaten
+11000|simple|Schätzfrage: Mikrotransaktionen sind heute ein gängiges Modell um Spieleentwicklern über lange Zeit sehr einfach Geld einzubringen. Wie viele Einnahmen kann der Spieleentwickler Riot-Games mit League of Legends jeden Monat verzeichnen?|2016: ca.80mio Dollar/Monat - 2013: ca. 50mio Dollar/Monat|ohne|ohne
+Technik
+2100|simple|In welchem Zusammenhang zur IT Welt steht der Begriff "LKWPETER"?|Verwendet um BIOS-Passwörter von AMI und AWARD-BIOS zu umgehen.|text|Bei dem 1994 veröffentlichten PC IBM Aptiva konnte das BIOS-Passwort umgangen werden, wenn beim Booten beide Maustasten gedrückt gehalten wurden.
+2200|multiple|Wie viel Megabyte RAM hatte das erste iPhone?|128|256|512|1024|128, 412MHz, Release 2007|ohne|ohne
+2500|simple|Aufschreiben: Wie lautet der Vorname von Mcgyver?|Angus MacGyver|ohne|ohne
+21000|simple|Für was steht die Abkürzung "TCP/IP"?|TCP/IP = Transmission Control Protocol / Internet Protocol|ohne|ohne
+TV
+3100|simple|Schätzfrage: Wie viel Gehalt bekommt Ashton Kutscher pro Folge 2 1/2 men?|755.000 Dollar|ohne|ohne
+3200|image|ttt.jpg|Tick Trick Track|imagequestionimage|ohne
+3500|simple|Der Film Full Metal Jacket von Stanley Kubrik kam 1987 in die Kinos. Eine der Hauptfiguren ist Private Paula. Welchen Namen gab er seinem Gewehr?|Charlene|image|privatepaula.jpg
+31000|simple|Wie lautet der zweite Vorname von Walter White?|Hartwell|ohne|ohne

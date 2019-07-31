@@ -1,0 +1,74 @@
+@font-face {
+				font-family: 'Roboto-Regular';
+				src: url('./fonts/Roboto-Regular.ttf');
+}
+@font-face {
+				font-family: 'Roboto-Medium';
+				src: url('./fonts/Roboto-Medium.ttf');
+}
+@font-face {
+				font-family: 'Roboto-Bold';
+				src: url('./fonts/Roboto-Bold.ttf');
+}
+
+	body {
+		position: relative;
+		font-family: Roboto-Regular;
+		color: black;
+		font-size: 16px;
+		margin:0px;
+		paddin:0px;
+	}
+
+	table {
+		border: 0px solid black;
+		border-collapse: collapse;
+		align: center;
+		text-align: center;
+	}
+
+	.header {
+		border:0px solid black;
+	}
+
+	.punkte {
+		width:80px;
+		border:0px solid black;
+	}
+	.frageselect {
+		width: 80px;
+	}
+	#frage {
+		width:500px;
+	}
+	#videoid {
+		display:none;
+		width:170px;
+	}
+	#multi {
+		display: none;
+		width: 400px;
+	}
+	#richtig {
+		width:250px;
+	}
+	#trivia {
+		display: none;
+		width: 250px;
+	}
+	.triviaselect {
+		width: 150px;
+	}
+	#fragendiv {
+		padding-left:10px;
+		color:blue;
+	}
+	#downloaddiv {
+		padding-left:10px;
+	}
+	#textbox {
+		padding-left:10px;
+		border:0px;
+		width:95%;
+		height:200px;
+	}

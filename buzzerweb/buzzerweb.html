@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>NerdBeef! Smartbuzzer</title>
+		<link rel="stylesheet" type="text/css" href="stylebuzzer.css" media="screen" />
+		<script type="text/javascript" src="ip.js"></script>
+		<script type="text/javascript" src="jquery.min.js"></script>
+		<script type="text/javascript" src="jquery.mobile.custom.min.js"></script>
+		<script type="text/javascript" src="socket.io.js"></script>
+		<script type="text/javascript" src="func.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		
+		<script type="text/javascript">
+		$(function() {
+			$('#buzzerwrapper').hide();
+			var socket = io.connect(ip);
+			
+			var getUrlParameter = function getUrlParameter(sParam) {
+				var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+				sURLVariables = sPageURL.split('&'),
+				sParameterName,
+				i;
+				for (i = 0; i < sURLVariables.length; i++) {
+					sParameterName = sURLVariables[i].split('=');
+
+					if (sParameterName[0] === sParam) {
+						return sParameterName[1] === undefined ? true : sParameterName[1];
+					}
+				}
+			};
+			var buzzerid = getUrlParameter('playerselect');
+
+			socket.on('connect', function(data) {
+				if((buzzerid===undefined))
+				{
+					$('#setupwrapper').show();
+					$('#buzzerwrapper').hide();
+				}
+				else
+				{
+					$('#setupwrapper').hide();
+					$('#buzzerwrapper').show();
+				}
+				socket.emit('getglobalplayers');
+			});
+
+			socket.on('connect_error', function(data) {
+				$('#setupwrapper').show();
+				$('#buzzerwrapper').hide();
+			});
+
+			socket.on('post_globalplayers', function(data) {
+			$('#playerselect').empty();
+				for(i=0;i<data.length;i++)
+				{
+					$('#playerselect').append($('<option>', {
+						value: i,
+						text: data[i]
+					}));
+				}
+			});
+
+			$('#buzzer').touchstart(function() {
+				sendbuzzer();
+			});
+
+			$('#buzzer').click(function() {
+				sendbuzzer();
+			});
+			
+			$('#setupbutton').click(function(e) {
+				e.preventDefault();
+				var url = window.location.href+'?playerselect='+$('select[id=playerselect]').val();
+				window.location.href = url;
+			});
+			
+			function sendbuzzer() {
+				var data = {
+					buzzerid: buzzerid,
+					timestamp: '0',
+				};
+				socket.emit('buzzerresponse',data);			
+			}
+		});
+		</script>
+	</head>
+	<body>
+		<div id="setupwrapper">
+			<table border=0>
+				<tr><td colspan="2" align="center"><div id="header">NerdBeef Smartbuzzer</div></td></tr>
+				<tr><td><span class="spielerid"><br>Spieler-ID:</span></td><td><select id="playerselect" class="dropdown"></select></td></tr>
+				<tr><td colspan="2" align="center"><div id="setupbutton">Spielen!</div></td></tr>
+			</table>
+		</div>
+		<div id="buzzerwrapper">
+			<div id="buzzer"><img src="buzzerweb.jpg" width="100%"></div>
+		</div>
+	</body>

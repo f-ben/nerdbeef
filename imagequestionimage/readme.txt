@@ -1,0 +1,1 @@
+Fragen-raten-bilder müssen in diesem Ordner gespeichert werden. Die Bilder werden beim Raten und auch gleichzeitig als Antwort verwendet.

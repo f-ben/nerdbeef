@@ -1,0 +1,185 @@
+@font-face {
+				font-family: 'Roboto-Regular';
+				src: url('./fonts/Roboto-Regular.ttf');
+}
+@font-face {
+				font-family: 'Roboto-Medium';
+				src: url('./fonts/Roboto-Medium.ttf');
+}
+@font-face {
+				font-family: 'Roboto-Bold';
+				src: url('./fonts/Roboto-Bold.ttf');
+}
+
+	body {
+		position: relative;
+		font-family: Roboto-Regular;
+		color: black;
+		font-size: 24px;
+	}
+	table {
+		border: 0px solid black;
+	}
+	.textinput {
+		height: 30px;
+		width:250px;
+		border: 0;
+		border-bottom: 1px dotted black;
+		font-size: 18px;
+		padding-left: 30px;
+	}
+	.button {
+		border-radius: 2px;
+		height: 31px;
+		width: 70px;
+		font-size: 18px;
+		margin-left:50px;
+		padding-top:5px;
+		color: black;
+		background-color: #B0BEC5;
+		border: 1px solid black;
+		text-align: center;
+	}
+	#plus {
+		text-align: center;
+		border: 1px solid black;
+		background-color: #A5D6A7;
+		border-radius: 2px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		-ms-user-select: none;
+	}
+	#minus {
+		text-align: center;
+		border: 1px solid black;
+		background-color: #EF9A9A;
+		border-radius: 2px;
+		margin-left: 10px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		-ms-user-select: none;
+	}
+	.drop {
+		border: 1px solid black;
+		width: 100px;
+		height: 30px;
+		background-color: white;
+		display: inline-block;
+	}
+	.demobuzzer {
+		text-align: center;
+		border: 1px solid black;
+		background-color: #B0BEC5;
+		border-radius: 2px;
+		display: inline-block;
+		padding: 0 25px;
+		color: black;
+		font-size: 18px;
+		margin-left: 30px;
+	}
+	#addplayer, #addcategory {
+		border: 1px solid black;
+		border-radius: 2px;
+		width: 30px;
+		height: 30px;
+		text-align: center;
+		display: inline-block;
+		background-color: #A5D6A7;
+		margin-left:25px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		-ms-user-select: none;
+	}
+	#removeplayer, #removecategory, #catcollapse	{
+		border: 1px solid black;
+		border-radius: 2px;
+		width: 30px;
+		height: 30px;
+		text-align: center;
+		display: inline-block;
+		background-color: #EF9A9A;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		-ms-user-select: none;
+	}
+	.pointsrow, #header {
+		height: 50px;
+		width: 120px;
+		vertical-align: center;
+		text-align: center;
+	}
+	.mult {
+		border: 1px solid black;
+		width: 100px;
+		display: inline-block;
+		text-align: center;
+		border: 1px solid black;
+		border-radius: 2px;
+		margin-left: 5px;	
+		height: 48px;
+		line-height: 48px; 
+		vertical-align: center;
+		background-color: #A5D6A7;		
+	}
+	.div {
+		border: 1px solid black;
+		width: 100px;
+		display: inline-block;
+		text-align: center;
+		border: 1px solid black;
+		border-radius: 2px;
+		margin-left: 5px;	
+		height: 48px;
+		line-height: 48px; 
+		vertical-align: center;
+		background-color: #EF9A9A;
+	}
+	#adminwrapper {
+		width: 1500px;
+		vertical-align: top;
+	}
+	#playerswrapper {
+		width: 900px;
+		vertical-align:top;
+	}
+	#categorieswrapper {
+		width: 600px;
+		vertical-align: top;
+	}
+	#spielfeld, #adminpoints {
+		margin-top: 30px;
+	}
+	#adminpoints {
+		width:220px;
+	}
+	#questionwrapper {
+		margin-top: 40px;
+	}
+	.fixbuttons {
+		margin-left:-2px;
+		padding-top:10px;
+		padding-bottom:10px;
+		padding-left:25px;
+		padding-right:20px;
+		font-family: Roboto-Medium;
+		font-size: 20px;
+		border: 1px solid black;
+		text-align: center;
+		display:inline;
+	}
+	#fix {
+		background-color: rgba(0, 200, 0, 0.4);
+		color: rgba(0, 111, 0, 1);
+	}
+	#del {
+		background-color: rgba(200, 0, 0, 0.4);
+		color: rgba(111, 0, 0, 1);
+	}
+	#clean {
+		background-color: rgba(0, 0, 200, 0.4);
+		color: rgba(0, 0, 111, 1);
+	}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>NerdBeef! Spielbrett</title>
+		<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+		<script type="text/javascript" src="ip.js"></script>
+		<script type="text/javascript" src="jquery.min.js"></script>
+		<script type="text/javascript" src="jquery-ui.js"></script>
+		<script type="text/javascript" src="jquery.pietimer.js"></script>
+		<script type="text/javascript" src="jquery.transit.min.js"></script>
+		<script type="text/javascript" src="socket.io.js"></script>
+		<script type="text/javascript" src="func.js"></script>
+		<script>
+		function preventUnload( state )
+		{
+			unloadMessage = "Sind Sie sicher dass Sie die Seite verlassen möchten?";
+			window.onbeforeunload = state ? function() { return unloadMessage; } : null;
+		}
+		preventUnload( true );
+		
+		var currentc;
+		var currentp;
+		var questiontype;
+		
+		var isMobile = {
+			Android: function() {
+				return navigator.userAgent.match(/Android/i);
+			},
+			BlackBerry: function() {
+				return navigator.userAgent.match(/BlackBerry/i);
+			},
+			iOS: function() {
+				return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+			},
+			Opera: function() {
+				return navigator.userAgent.match(/Opera Mini/i);
+			},
+			Windows: function() {
+				return navigator.userAgent.match(/IEMobile/i);
+			},
+			any: function() {
+				return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+			}
+		};
+		if(isMobile.any()) {
+			window.location = "./buzzerweb";
+		}
+		
+		jQuery(function($){
+			var socket = io.connect(ip);
+			var players = [];
+			var scores = [];
+			$('#stand').html(version+' '+datum);
+			$('#floatingbuzzer').hide();
+			$('#floatingtrivia').hide();
+			$('#floatingpietimer').hide();
+			$('#imagequestion').hide();
+
+			socket.on('sync_players', function(data) {
+				sync_players(data);
+			});
+
+			socket.on('sync_game', function(data) {
+				sync_game(data);
+			});
+
+			socket.on('start_question', function(data) {
+				currentc = data.currentc;
+				currentp = data.currentp;
+				questiontype = data.questiontype;
+				start_question(data);
+			});
+			
+			socket.on('buzzer_accepted', function(data) {
+				buzzer_accepted(data);
+			});
+			
+			socket.on('disable_question', function(data) {
+				disable_question(data);
+			});
+			
+			socket.on('fix_question', function(data) {
+				fix_question(data);
+			});
+
+			socket.on('show_trivia', function(data) {
+				show_trivia(data);
+			});
+			
+			socket.on('points_recalc', function(data) {
+				points_recalc(data);
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<div id="floatingwelcome">
+			Herzlich willkommen<br><br>
+			NerdBeef!
+			<div id="floatingwelcomeadmin">
+				<a href="./buzzerweb" target="_blank">Smart-Buzzer</a> - 
+				<a href="./fragengenerator" target="_blank">Fragengenerator</a> - 
+				<a href="./admin" target="_blank">Adminbereich</a>
+			</div>
+		</div>
+		<div id="floatingtrivia">
+			<div id="triviatitle"><div id="triviatitlecontent"></div></div>
+			<div id="trivia"></div>
+		</div>
+		<div id="floatingbuzzer">
+			<div id="buzzertitle"><div id="buzzertitlecontent"></div></div>
+			<div id="buzzer"></div>
+			<div id="timestamp"></div>
+		</div>
+		<div id="floatingpietimer">
+			<div id="pietimertitle"><div id="pietimertitlecontent"></div></div>
+			<div id="pietimerfrageDEAKTIVIERT"></div>
+			<div id="pietimermain"></div>
+		</div>
+		<div id="gamewrapper">
+			<div id="spielfelddiv">
+					<table id="spielfeld" >
+						<tr id="spielfeldheader"></tr>
+					</table>
+			</div>
+		</div>
+		<div id="imagequestion">
+			<img id="imagequestionimage" src="" alt="" />
+		</div>
+		<div id="scoresdiv"><span id="stand"></span></div>
+	</body>
+</html>

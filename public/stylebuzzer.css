@@ -1,0 +1,65 @@
+@font-face {
+				font-family: 'Roboto-Regular';
+				src: url('./fonts/Roboto-Regular.ttf');
+}
+	body
+	{
+		margin:0;
+		font-size:18px;
+		font-family: Roboto-Regular;
+		margin:10px;
+	}
+	table
+	{
+		width:100%;
+		padding:0;
+	}
+	input
+	{
+		font-size:18px;
+		font-family: Roboto-Regular;
+		width:100%;
+	}
+	img{
+		position: absolute;
+		margin: auto;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+	#buzzerwrapper
+	{
+		height:100%;
+		width:100%;
+		background-color:white;
+		background:#FA0000;
+		
+	}
+	#setupbutton
+	{
+		width:60%;
+		padding:5px;
+		margin-top:20px;
+		font-size:25px;
+		border:1px dotted black;
+	}
+	.dropdown
+	{
+		width:60%;
+		padding:5px;
+		margin-top:20px;
+		font-size:25px;
+		border:1px dotted black;
+	}
+	.spielerid
+	{
+		font-size:25px;
+	}
+	#header
+	{
+		padding:5px;
+		margin-bottom:20px;
+		font-size:25px;
+		border:0;
+	}

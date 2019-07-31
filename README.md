@@ -3,4 +3,5 @@ Achtung: Die Software wird von mir nicht länger weiterentwickelt. Vor der Verwe
 
 Installation:
 > npm install
+
 > node nerbeef2.js
